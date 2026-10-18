@@ -1,0 +1,22 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Build demos
+        run: |
+          dotnet build 01-EventSourcing/BankAccount --configuration Release
+          dotnet build 02-HighPerformance/SpanDemo --configuration Release
+          dotnet build 02-HighPerformance/PipelinesDemo --configuration Release
+          dotnet build 03-SourceGenerators/LoggerMessageDemo --configuration Release
+          dotnet build 04-AotConsole --configuration Release
